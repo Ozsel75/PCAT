@@ -1,12 +1,16 @@
 //npm init
 //npm i express
 //npm install --save-dev nodemon
+// npm i ejs
+// npm start     başlatma  json scripts e "start": "nodemon app.js"  ekledik
 
 const express = require("express")
+const ejs = require("ejs")    //TEMPLATE ENGINE
 const path = require("path")
 const app = express()
 
-
+//TEMPLATE ENGINE 
+app.set("view engine", "ejs")
 
 const myLogger = (req, res, next) => {
     console.log("middeleware log 1")
@@ -22,17 +26,16 @@ app.use(express.static('public'))
 app.use(myLogger)
 app.use(myLogger2)
 
+
+//ROUTES
 app.get("/", (req, res)=>{
-
-    res.sendFile(path.resolve(__dirname,"temp/index.html"))
-
-    const photo = {
-        id: 1,
-        name: "Photo name",
-        description: "Photo description"
-    }
-
-    res.send(photo)
+    res.render("index")
+})
+app.get("/about", (req, res)=>{
+    res.render("about")
+})
+app.get("/add", (req, res)=>{
+    res.render("add")
 })
 
 
